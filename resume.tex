@@ -1,272 +1,202 @@
-\documentclass[letterpaper,11pt]{article}
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+%	The MIT License (MIT)
+%
+%	Copyright (c) 2021 Aniket Pathak
+%
+%	Permission is hereby granted, free of charge, to any person obtaining a copy
+%	of this software and associated documentation files (the "Software"), to deal
+%	in the Software without restriction, including without limitation the rights
+%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%	copies of the Software, and to permit persons to whom the Software is
+%	furnished to do so, subject to the following conditions:
+%	
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+%	THE SOFTWARE.
+%	
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
 
-\usepackage{latexsym}
-\usepackage[empty]{fullpage}
-\usepackage{titlesec}
-\usepackage{marvosym}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{verbatim}
-\usepackage{enumitem}
-\usepackage[hidelinks, colorlinks]{hyperref}
-\usepackage{fancyhdr}
-\usepackage[english]{babel}
+%----------------------------------------------------------------------------------------
+%	DOCUMENT DEFINITION
+%----------------------------------------------------------------------------------------
+
+% article class because we want to fully customize the page and not use a cv template
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% % fontspec allows you to use TTF/OTF fonts directly
+% \usepackage{fontspec}
+% \defaultfontfeatures{Ligatures=TeX}
+
+% % modified for ShareLaTeX use
+% \setmainfont[
+% SmallCapsFont = Fontin-SmallCaps.otf,
+% BoldFont = Fontin-Bold.otf,
+% ItalicFont = Fontin-Italic.otf
+% ]
+% {Fontin.otf}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+
+%other packages for formatting
+\RequirePackage{color}
+\RequirePackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+
+%tabularx environment
 \usepackage{tabularx}
-\usepackage{xcolor}
-\input{glyphtounicode}
 
+%for lists within experience section
+\usepackage{enumitem}
 
-%----------FONT OPTIONS----------
-% sans-serif
-% \usepackage[sfdefault]{FiraSans}
-% \usepackage[sfdefault]{roboto}
-% \usepackage[sfdefault]{noto-sans}
-% \usepackage[default]{sourcesanspro}
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
 
-% serif
-% \usepackage{CormorantGaramond}
-% \usepackage{charter}
+%to prevent spillover of tabular into next pages
+\usepackage{supertabular}
+\usepackage{tabularx}
+\newlength{\fullcollw}
+\setlength{\fullcollw}{0.47\textwidth}
 
+%custom \section
+\usepackage{titlesec}				
+\usepackage{multicol}
+\usepackage{multirow}
 
-\pagestyle{fancy}
-\fancyhf{} % clear all header and footer fields
-\fancyfoot{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
+%CV Sections inspired by: 
+%http://stefano.italians.nl/archives/26
+\titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
 
-% Adjust margins
-\addtolength{\oddsidemargin}{-0.7in}
-\addtolength{\evensidemargin}{-0.7in}
-\addtolength{\textwidth}{1in}
-\addtolength{\topmargin}{-.7in}
-\addtolength{\textheight}{1.0in}
+%for publications
+\usepackage[style=authoryear,sorting=ynt, maxbibnames=2]{biblatex}
 
-\urlstyle{same}
+%Setup hyperref package, and colours for links
+\usepackage[unicode, draft=false]{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+\addbibresource{citations.bib}
+\setlength\bibitemsep{1em}
 
-\raggedbottom
-\raggedright
-\setlength{\tabcolsep}{0in}
+%for social icons
+\usepackage{fontawesome5}
 
-% Sections formatting
-\titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+%debug page outer frames
+%\usepackage{showframe}
 
-% Ensure that generate pdf is machine readable/ATS parsable
-\pdfgentounicode=1
-
-%-------------------------
-% Custom commands
-\newcommand{\resumeItem}[1]{
-  \item\small{
-    {#1 \vspace{-2pt}}
-  }
-}
-\hypersetup{%
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=blue,
-    citecolor = black,    
-    urlcolor=teal,
-}
-
-\newcommand{\resumeSubheading}[4]{
-  \vspace{-2pt}\item
-    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & #2 \\
-      \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeSubSubheading}[2]{
-    \item
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \textit{\small#1} & \textit{\small #2} \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeProjectHeading}[2]{
-    \item
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \small#1 & #2 \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
-
-\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
-
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
-
-%-------------------------------------------
-%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
 \begin{document}
 
-%----------HEADING----------
+% non-numbered pages
+\pagestyle{empty} 
 
-\begin{center}
-    \textbf{\Huge \scshape Divyanshu Shekhar} \\ \vspace{1pt}
-    \href{mailto:imdshekhar@gmail.com}{\underline{gmail}} $|$ 
-    \href{https://twitter.com/dshekhar17}{\underline{twitter}} $|$ 
-    \href{https://linkedin.com/in/dshekhar17}{\underline{linkedin}} $|$
-    \href{https://github.com/divshekhar}{\underline{github}} $|$
-    \href{tel:+919110013305} {\underline{phone}}
-    
-\end{center}
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
 
+% \begin{tabularx}{\linewidth}{ @{}X X@{} }
+% \huge{Your Name}\vspace{2pt} & \hfill \emoji{incoming-envelope} email@email.com \\
+% \raisebox{-0.05\height}\faGithub\ username \ | \
+% \raisebox{-0.00\height}\faLinkedin\ username \ | \ \raisebox{-0.05\height}\faGlobe \ mysite.com  & \hfill \emoji{calling} number
+% \end{tabularx}
 
-%-----------EXPERIENCE-----------
-% \section{Experience}
-%   \resumeSubHeadingListStart
-% -----------Multiple Positions Heading-----------
-%    \resumeSubSubheading
-%     {Software Engineer I}{Oct 2014 - Sep 2016}
-%     \resumeItemListStart
-%        \resumeItem{Apache Beam}
-%          {Apache Beam is a unified model for defining both batch and streaming data-parallel processing pipelines}
-%     \resumeItemListEnd
-%    \resumeSubHeadingListEnd
-%-------------------------------------------
-    % \resumeSubheading
-    %   {\href{https://play.google.com/store/apps/details?id=org.elitecaps.tyup}{Tyup : Student Social Media \& Community Platform}}{India}
-    %   {Founder \& App Developer}{July 2021 -- Present}
-    %   \resumeItemListStart
-    %     \resumeItem{Building a competent team from scratch as a startup company}
-    %     \resumeItem{Integrated back-end \& front-end of the application}
-    %     \resumeItem{Contribution to prototyping \& app development}
-    %     \resumeItem{Building strategic marketing and business development plans}
-        
-    
-    %   \resumeItemListEnd
-    % \resumeSubheading
-    %   {Major League Hacking}{Remote}
-    %   {Engineering Fellow}{January 2021 -- April 2021}
-    %   \resumeItemListStart
-    %     \resumeItem{Developed the CryptoDrive using Web3, Solidity and React, gained 100 of users in first release.}
-    %     \resumeItem{Researched on decentralized networks and developed a decentralized file storage service. }
-    %     \resumeItem{Awarded as Fellow from Major League Hacking(150 Fellows from 40,000) Received winning prize for CryptoDrive as a global winner.}
-       
-    %  \resumeItemListEnd
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\Huge{ANIKET PATHAK} \\[7.5pt]
+\href{https://github.com/aniketpathak028}{\raisebox{-0.05\height}\faGithub\ aniketpathak028} \ $|$ \ 
+\href{https://www.linkedin.com/in/aniket-pathak-8925311b5/}{\raisebox{-0.05\height}\faLinkedin\ aniketpathak} \ $|$ \ 
+\href{mailto:aniketpathak028@gmail.com}{\raisebox{-0.05\height}\faEnvelope \ aniketpathak028@gmail.com} \ $|$ \ 
+\href{tel:+916291513445}{\raisebox{-0.05\height}\faMobile \ +91 6291513445} \\
+\end{tabularx}
 
+%----------------------------------------------------------------------------------------
+% EXPERIENCE SECTIONS
+%----------------------------------------------------------------------------------------
 
-%   \resumeSubHeadingListEnd
+%Interests/ Keywords/ Summary
 
+\section{Summary}
+A dedicated and hardworking individual with a passion for learning and innovation, eager to apply my knowledge and skills to contribute to a successful and thriving organization.
 
-%-----------PROJECTS-----------
+%Experience
+\section{Open Source}
+
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{KWoC'21 Indian Institute of Technology, Kharagpur} & \hfill Dec 2021 - Dec 2021 \\[3.75pt]
+\\
+\multicolumn{2}{@{}X@{}}{Contributed to KWoC's official repository by creating a search feature in their FAQ section. The search feature enables users to quickly find answers to their questions using keywords.}
+\end{tabularx}
+
+%Projects
 \section{Projects}
-    
-    \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{\href{https://play.google.com/store/apps/details?id=org.elitecaps.tyup}{Tyup : Let's Connect Students }}{[ Flutter, Dart, Java ]}}{June 2021 -- June 2022}
-          \resumeItemListStart
-           \resumeItem{\textbf{Problem:} {Lack of student connectivity in a college} }
-           \resumeItem{\textbf{Solution:} A one stop platform for students to connect and collaborate on a project.}
-           \resumeItem{Lead a team to bring this idea to reality}
-           \resumeItem{Integrated back-end with front-end}
-           \resumeItem{1K+ downloads with 200 active users per month}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
-    
-    \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{\href{https://play.google.com/store/apps/details?id=com.hackthedeveloper.recite}{Recite : Text-to-speech app for web \& PDF }}{[ Flutter, Dart, Java ]}}{April 2021}
-          \resumeItemListStart
-           \resumeItem{\textbf{Problem:} {Lack of all in one text-to-speech app for web and PDF} }
-           \resumeItem{\textbf{Solution:} Built Recite, a text-to-speech app with multiple language and voice support.}
-           \resumeItem{Uses Google TTS Engine for voice, language and accent support}
-           \resumeItem{Uses NLP model for sentence detection}
-           \resumeItem{10K+ downloads with 2K+ active users per month}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
+\begin{tabularx}{\linewidth}{ @{}l r@{} }
+\textbf{File Compressor} & \hfill \href{https://github.com/aniketpathak028/File-Compressor}{Github} \\[3.75pt]
+\multicolumn{2}{@{}X@{}}{A file zipper based on Huffman Coding, a lossless, bottom-up compression algorithm. It can compress and decompress any text files.} 
+\\ \footnotesize{\emph{\textbf{Tech Stack: C++, Huffman-Coding, Compression Algorithm}}}
+\\
+\\ \textbf{Flexboard} & \hfill \href{https://github.com/dorbus/flexboard}{Github}
+\\[3.75pt]
+\multicolumn{2}{@{}X@{}}{React component library to create re-sizable / draggable sidebars in a React application with ease and customize it according to their requirements}
+\\ \footnotesize{\emph{\textbf{Tech Stack: React.js, Typescript, CSS, Storybook, Jest, Rollup}}}
+\\
+\\ \textbf{React-Animate-Modal} & \hfill \href{https://github.com/dorbus/react-animated-modal}{Github}
+\\[3.75pt]
+\multicolumn{2}{@{}X@{}}{Animated modal dialogs for React, easy to use pre-built components for smooth and visually appealing user interactions.}
+\\ \footnotesize{\emph{\textbf{Tech Stack: React.js, Typescript, CSS, Storybook, Jest, Rollup}}}
+\end{tabularx}
 
-    \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{\href{https://github.com/marketplace/workflow-reporter} {Workflow Reporter : GitHub App }}{[ Typescript, Probot, GitHub API ]}}{January 2022}
-          \resumeItemListStart
-           \resumeItem{\textbf{Problem:} {Repetitive message for failed workflow jobs in GitHub action} }
-           \resumeItem{\textbf{Solution:} GitHub app to report failed workflow job actions and notify pull request creator with custom report message for the failed workflow job}
-           \resumeItem{Used GitHub Actions \& Pull Request API to automate the reporting}
-           \resumeItem{Deployed on Heroku}
-           \resumeItem{50+ subscribed customers}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
-
-    \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{\href{https://github.com/divshekhar/OpenCV}{OpenCV }}{[ Python, Numpy, Pandas, Matplotlib ]}}{June 2020}
-          \resumeItemListStart
-           \resumeItem{created object detection, motion detection, lane detection}
-           \resumeItem{Built face recognition \& face detection system using machine learning models}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
-
-    \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{\href{https://pub.dev/packages/flutter_shortcuts}{Flutter Shortcuts }}{[ Flutter, Dart, Java ]}}{June 2021}
-          \resumeItemListStart
-           \resumeItem{\textbf{Problem:} Plugin for creating static \& dynamic app shortcuts on the home screen.}
-           \resumeItem{\textbf{Solution:} Built an open-source flutter plugin for easy creation of static \& dynamic app shortcuts.}
-           \resumeItem{80\%+ popularity \& 100+ likes on  \href{https://pub.dev/packages/flutter_shortcuts}{@pub.dev}.}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
-    
-  \resumeSubHeadingListStart
-      \resumeProjectHeading
-          {\textbf{\href{https://github.com/divshekhar/DemonOS}{\textbf{DemonOS}}}{ [Assembly, C, Makefile, Shell, Qemu]}}{July 2021}
-          \resumeItemListStart
-            \resumeItem{Created an operating system from scratch}
-            \resumeItem{Implemented IDT, GDT, PIC with A20 line enabled \& switching real to protected mode}
-            \resumeItem{Implemented basic input output using c language to write on terminal}
-            \resumeItem{Used Makefile and Shell to compile and build the executable to iso file}
-            \resumeItem{Used Qemu to run and debug the operating system}
-          \resumeItemListEnd
-    \resumeSubHeadingListEnd
-    
-    % \resumeSubHeadingListStart
-    %   \resumeProjectHeading
-    %       {\textbf{\href{https://pub.dev/packages/AutoGit}{AutoGit }}{[ Python, TKinter, Selenium, Shell ]}}{December 2019}
-    %       \resumeItemListStart
-    %        \resumeItem{\textbf{Problem:} Creating \& initializing git in remote and local computer}
-    %        \resumeItem{\textbf{Solution:} Built an open-source software for automating repository creation \& deletion both on remote }
-    %        \resumeItem{ Created an automated system using selenium and GUI using Tkinter}
-    %       \resumeItemListEnd
-    % \resumeSubHeadingListEnd
-
-
-%
-%-----------PROGRAMMING SKILLS-----------
-\section{Technical Skills}
- \begin{itemize}[leftmargin=0.15in, label={}]
-    \small{\item{
-     \textbf{Languages(Proficient)}{: C/C++, Java, Python, Dart, JavaScript } \\
-      \textbf{Languages(Familiar)}{: Golang, TypeScript, Solidity, Assembly, Shell } \\
-      \textbf{DB}{: SQL, MongoDB} \\
-     \textbf{Frameworks}{: Flutter, GTK+, React, Node.js, Angular } \\
-     \textbf{Developer Tools}{: AWS(EC2, SES, Route53), Docker, Postman, Qemu } \\
-    }}
- \end{itemize}
-
-%-----------ACHIEVEMENTS-----------
-
-\section{ACHIEVEMENTS}
- \begin{itemize}[leftmargin=0.15in, label={}]
-    \small{\item{
-        \resumeItemListStart
-            \resumeItem{\textbf{\href{https://www.linkedin.com/posts/dshekhar17_hultprize2022-hultprizekiit-kiituniversity-activity-6899007358467743746-6hZ3}{Hult Prize 2022 On-Campus Winner}}}
-            
-      \resumeItemListEnd
-    }}
- \end{itemize}
- 
-%-----------EDUCATION-----------
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
 \section{Education}
-  \resumeSubHeadingListStart
-    \resumeSubheading
-      {Kalinga Institute of Industrial Technology}{Bhubaneswar, Odisha}
-      {Pre-final (Third) year, B.Tech in Computer science and engineering}{September, 2020 -- Expected June. 2024}
-  \resumeSubHeadingListEnd
+\begin{tabularx}{\linewidth}{@{}l X@{}}	
+2020 - 2024 & \textbf{BTech Computer Science and Engineering, KIIT University} \hfill (CGPA: 9.15/10) \\ 
+
+2018 - 2020 & \textbf{XII CBSE, Delhi Public School Ruby Park} \hfill  (Percentage: 92.3) \\
+
+2013 - 2018 & \textbf{X CBSE, Indus Valley World School} \hfill  (Percentage: 96.2) \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+\section{Skills}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+Technical Skills &  \normalsize{C++, Data Structures and Algorithms, OOPs, OS, DBMS, Computer Networks, Javascript, Typescript, React.js, Redux, Storybook, Git, Github, Linux}\\
+\\
+Non-Technical Skills  &  \normalsize{Communication, Adaptability, Collaboration, Time Management}\\  
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	SKILLS
+%----------------------------------------------------------------------------------------
+
+\section{Achievements}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+\multicolumn{2}{@{}X@{}}
+{
+\begin{itemize}
+\item Solved 381+ questions on Leetcode (id: \href{https://leetcode.com/imAniket/}{imAniket})
+\item Leetcode Annual Badge for a streak of 100+ days in 2022
+\end{itemize}
+}
+\end{tabularx}
+
+\vfill
+% \center{\footnotesize Last updated: \today}
+
 \end{document}
